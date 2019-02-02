@@ -1,5 +1,4 @@
 --main view for seeing films
-
 CREATE OR replace VIEW film_view1 
 AS 
   SELECT films_wiki.id, 
@@ -18,7 +17,10 @@ AS
          films_omdb.award_noms, 
          films_omdb.award_wins, 
          films_omdb.oscar_noms, 
-         films_omdb.oscar_wins 
+         films_omdb.oscar_wins,
+         films_omdb.ratings_imdb,
+         films_omdb.ratings_meta,
+         films_omdb.ratings_tomatoes
   FROM   films_wiki 
          join films_omdb 
            ON films_wiki.id = films_omdb.id 
