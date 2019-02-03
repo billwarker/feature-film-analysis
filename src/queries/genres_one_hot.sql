@@ -1,3 +1,5 @@
+-- one hot encoding for all of the possible genres
+
 CREATE OR replace VIEW "genres_one_hot"
 AS
     WITH titles_by_genre 
