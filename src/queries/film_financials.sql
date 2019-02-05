@@ -1,3 +1,5 @@
+-- query core financials from financial_summary
+
 SELECT film_view1.id,
        film_view1.title,
        financial_summary.budget,

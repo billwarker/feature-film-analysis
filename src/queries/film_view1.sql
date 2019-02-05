@@ -1,4 +1,5 @@
 --main view for seeing films
+
 CREATE OR replace VIEW film_view1 
 AS 
   SELECT films_wiki.id, 

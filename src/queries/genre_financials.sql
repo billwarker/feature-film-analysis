@@ -1,3 +1,6 @@
+-- financials for each film's genre.
+-- allows for summary statistics by grouping on genre.
+
 SELECT film_view1.id,
        film_view1.title,
        genres.genre,
@@ -12,4 +15,4 @@ FROM   film_view1
        JOIN genres 
          ON film_genres.genre_id = genres.id
        JOIN financial_summary
-         ON film_view1.id = financial_summary.film_id
+         ON film_view1.id = financial_summary.film_id;
