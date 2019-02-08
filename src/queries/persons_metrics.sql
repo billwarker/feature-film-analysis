@@ -1,6 +1,6 @@
 -- show aggregate statistics for each person
 
-SELECT full_name, 
+SELECT persons.id, persons.full_name, 
        MODE() 
          within GROUP (ORDER BY film_persons.role) AS most_common_role,
        MODE() 
@@ -11,20 +11,16 @@ SELECT full_name,
        Avg(roi)                                    AS avg_roi, 
        Avg(ratings_meta)                           AS avg_meta_rating, 
        Avg(ratings_imdb)                           AS avg_imdb_rating, 
-       Avg(ratings_tomatoes)                       AS avg_tomatoes_rating 
+       Avg(ratings_tomatoes)                       AS avg_tomatoes_rating
 FROM   film_view1 
-       left join financial_summary 
+       join financial_summary 
               ON financial_summary.film_id = film_view1.id 
-       right join film_persons 
+       join film_persons 
                ON film_persons.film_id = film_view1.id 
-       left join persons 
+       join persons 
               ON film_persons.person_id = persons.id
-       left join film_companies
+       join film_companies
               ON film_companies.film_id = film_view1.id
-       left join companies
+       join companies
               ON film_companies.company_id = companies.id
-GROUP  BY full_name
-
-
-
-
+GROUP  BY persons.id, full_name
