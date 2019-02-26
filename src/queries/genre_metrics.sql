@@ -19,7 +19,7 @@ SELECT  film_view1.id,
         foreign_gross,
         domestic_pct,
         foreign_pct,
-        roi
+        financial_summary.roi
 FROM    film_view1 
         JOIN film_genres 
           ON film_view1.id = film_genres.film_id 
