@@ -1,0 +1,1 @@
+SELECT * FROM mojo_daily;
