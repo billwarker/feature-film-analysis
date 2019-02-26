@@ -17,7 +17,10 @@ from models import (Films, FilmsWiki, Persons, FilmPersons, Countries,
                     Languages, FilmLanguages, Genres,
                     FilmGenres)
 
-from settings import psql
+import os
+from dotenv import load_dotenv, find_dotenv
+dotenv_path = find_dotenv()
+load_dotenv(dotenv_path)
 
 class WikiFilmScrape:
 
@@ -43,11 +46,8 @@ class WikiFilmScrape:
     
     company_roles = ["Production", "Distribution"]
 
-    def __init__(self, psql):
-        self.engine = create_engine('postgresql://{}:{}@{}:{}/{}'.format(
-                                psql['user'], psql['password'],
-                                psql['host'], psql['port'],
-                                psql['database']))
+    def __init__(self):
+        self.engine = create_engine(os.environ.get("DATABASE_URL"))
 
         self.Base = declarative_base()
         Session = sessionmaker(bind=self.engine)
@@ -353,5 +353,5 @@ class WikiFilmScrape:
                 continue
 
 if __name__ == "__main__":
-    s = WikiFilmScrape(psql)
+    s = WikiFilmScrape()
     s.main()

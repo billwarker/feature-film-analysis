@@ -2,12 +2,19 @@ import bs4
 import requests
 import re
 import datetime
-from models import HolidaysUSA
+from models import (HolidaysUSA)
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import (scoped_session, sessionmaker)
-from settings import psql
+
+import os
+from dotenv import load_dotenv, find_dotenv
+dotenv_path = find_dotenv()
+load_dotenv(dotenv_path)
+
+
+engine = create_engine(os.environ.get("DATABASE_URL"))
 
 f = open("holidays 2010-2018.txt")
 
@@ -33,21 +40,8 @@ for line in f.readlines():
             pass
 
 
-
-engine = create_engine('postgresql://{}:{}@{}:{}/{}'.format(
-						psql['user'], psql['password'],
-						psql['host'], psql['port'],
-						psql['database']))
-
 Base = declarative_base()
 Base.metadata.bind = engine
-
-engine = create_engine('postgresql://{}:{}@{}:{}/{}'.format(
-                            psql['user'], psql['password'],
-                            psql['host'], psql['port'],
-                            psql['database']))
-
-Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
 

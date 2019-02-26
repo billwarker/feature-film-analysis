@@ -1,20 +1,19 @@
 # 2nd pass on scraping data from mojo for films that failed
 # initial mojo-scrape.py.
 
+import os
 from sqlalchemy import create_engine, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from models import Films, MojoSummary, MojoDaily, FilmsWiki
-
-from settings import psql
+from models import (Films, MojoSummary, MojoDaily, FilmsWiki)
 from mojo_scrape import *
 
+from dotenv import load_dotenv, find_dotenv
+dotenv_path = find_dotenv()
+load_dotenv(dotenv_path)
 
 if __name__ == "__main__":
-    engine = create_engine('postgresql://{}:{}@{}:{}/{}'.format(
-                                psql['user'], psql['password'],
-                                psql['host'], psql['port'],
-                                psql['database']))
+    engine = create_engine(os.environ.get("DATABASE_URL"))
 
     Base = declarative_base()
     Session = sessionmaker(bind=engine)

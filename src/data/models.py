@@ -7,13 +7,15 @@ from sqlalchemy import (Column, DateTime, ForeignKey,
 						func, BigInteger)
 from sqlalchemy import UniqueConstraint
 
-from settings import psql
 import sys
+import os
 
-engine = create_engine('postgresql://{}:{}@{}:{}/{}'.format(
-						psql['user'], psql['password'],
-						psql['host'], psql['port'],
-						psql['database']))
+from dotenv import load_dotenv, find_dotenv
+dotenv_path = find_dotenv()
+load_dotenv(dotenv_path)
+
+
+engine = create_engine(os.environ.get("DATABASE_URL"))
 
 Base = declarative_base()
 Base.metadata.bind = engine
@@ -189,6 +191,29 @@ class HolidaysUSA(Base):
     __tablename__ = 'usa_holidays'
     date = Column(DateTime, primary_key=True)
     holiday = Column(String, primary_key=True)
+
+class MojoSummary(Base):
+
+    __tablename__ = 'mojo_summary'
+    id = Column(Integer, ForeignKey('films_wiki.id'), primary_key=True)
+    film = relationship("FilmsWiki", backref=backref("film_mojo"))
+    domestic_gross = Column(Integer)
+    foreign_gross = Column(Integer)
+    budget = Column(Integer)
+
+
+class MojoDaily(Base):
+
+    __tablename__ = 'mojo_daily'
+    date = Column(DateTime, primary_key=True)
+    id = Column(Integer, ForeignKey('films_wiki.id'), primary_key=True)
+    film = relationship("FilmsWiki", backref=backref("film_daily"))
+
+    day = Column(String)
+    rank = Column(Integer)
+    gross = Column(Integer)
+    num_theatres = Column(Integer)
+    num_day = Column(Integer)
 
 def init_db():
     Base.metadata.create_all(bind=engine)
