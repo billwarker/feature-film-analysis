@@ -2,7 +2,6 @@ import bs4
 import requests
 import re
 import datetime
-from models import (HolidaysUSA)
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -13,6 +12,7 @@ from dotenv import load_dotenv, find_dotenv
 dotenv_path = find_dotenv()
 load_dotenv(dotenv_path)
 
+from models import HolidaysUSA
 
 engine = create_engine(os.environ.get("DATABASE_URL"))
 

@@ -6,7 +6,9 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from models import (Films, MojoSummary, MojoDaily, FilmsWiki)
-from mojo_scrape import *
+from mojo_scrape import (search_for_film, parse_search_page_for_href,
+                         extract_mojo_summary, extract_film_id, extract_mojo_daily)
+import time
 
 from dotenv import load_dotenv, find_dotenv
 dotenv_path = find_dotenv()
